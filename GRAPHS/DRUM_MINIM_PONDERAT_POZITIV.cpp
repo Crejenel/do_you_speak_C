@@ -83,7 +83,7 @@ int main() {
 	int x, y, z;
 	while (fin >> x >> y >> z) {
 		
-		// matrice[x][y] = matrice[y][x] = z
+		// matrice[x][y] = matrice[y][x] = z; <- graf neorientat
 		matrice[x][y] = z;
 
 	}
