@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <queue>
 using namespace std;
 
 //fisierul contine nr de varfuri si muchiile grafului
@@ -11,6 +12,7 @@ int matrice[101][101]{ 0 };
 int culori[101]{ 0 };
 int nr_noduri;
 
+// putem apela oricare dintre algoritmi
 void DFS(int nod,int culoare) {
 
 	for (int i = 1; i <= nr_noduri; i++) {
@@ -20,6 +22,27 @@ void DFS(int nod,int culoare) {
 			DFS(i, culoare);
 		}
 	}
+
+}
+
+void BFS(int nod, int culoare) {
+
+	queue<int> coada;
+	coada.push(nod);
+	while (!coada.empty()) {
+
+		nod = coada.front();
+		coada.pop();
+
+		for (int i = 1; i <= nr_noduri; i++) {
+			if (matrice[nod][i] == 1 && culori[i] == 0) {
+				culori[i] = culoare;
+				coada.push(i);
+			}
+		}
+
+	}
+
 
 }
 
@@ -42,7 +65,7 @@ int main() {
 		if (culori[i] == 0) {
 			culoare++;
 			culori[i] = culoare;
-			DFS(i, culoare);
+			BFS(i, culoare);
 		}
 	}
 
