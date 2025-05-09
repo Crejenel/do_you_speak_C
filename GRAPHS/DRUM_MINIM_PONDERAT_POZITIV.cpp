@@ -1,14 +1,15 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 #define INT_MAX 2147483647
 using namespace std;
 
 //nr de noduri, nodul start, muchiile propriu-zise cu ponderi
-ifstream fin("dijkstra.in");
+ifstream fin("data.txt");
 //distanta minima dintre nodul start si toate celelate noduri.
 //distanta de la nod start la nod start este 0
 //distanta de la nod start la nod inaccesibil este -1
-ofstream fout("dijkstra.out");
+ofstream fout("result.txt");
 
 int matrice[101][101];
 int nr_noduri;
@@ -29,6 +30,29 @@ int cauta_nod() {
 	}
 	return nod_curent;
 
+}
+
+//pentru afisarea distantelor efective
+void afiseaza_drumuri(int nod) {
+
+	if (cost[nod] == INT_MAX) {
+		fout << "Nu exista drum catre nodul " << nod << endl;
+		return;
+	}
+
+	vector<int> drum;
+	int current = nod;
+	while (current != nod_inceput) {
+		drum.push_back(current);
+		current = sursa[current];
+	}
+	drum.push_back(nod_inceput);
+
+	fout << "Drum catre nodul " << nod << ": ";
+	for (int i = (int)drum.size() - 1; i >= 0; i--) {
+		fout << drum[i] << " ";
+	}
+	fout << endl;
 }
 
 void Dijkstra(int nod_start) {
@@ -56,25 +80,26 @@ void Dijkstra(int nod_start) {
 
 	}
 
-	for(int i=1; i<=nr_noduri; i++)
-	if (i == nod_start) {
+	for (int i = 1; i <= nr_noduri; i++)
+		if (i == nod_start) {
 			fout << "0" << " ";
-	}
-	else if (cost[i] == INT_MAX) {
+		}
+		else if (cost[i] == INT_MAX) {
 
-		fout << "-1" << " ";
-	}
-	else {
-		fout << cost[i] << " ";
-	}
-	
+			fout << "-1" << " ";
+		}
+		else {
+			fout << cost[i] << " ";
+		}
+	fout << endl;
+
 }
 
 int main() {
 
 	fin >> nr_noduri;
 	for (int i = 1; i <= nr_noduri; i++) {
-		for (int j = 1; j <= nr_noduri; j++){
+		for (int j = 1; j <= nr_noduri; j++) {
 			matrice[i][j] = INT_MAX;
 		}
 	}
@@ -82,14 +107,16 @@ int main() {
 
 	int x, y, z;
 	while (fin >> x >> y >> z) {
-		
+
 		// matrice[x][y] = matrice[y][x] = z; <- graf neorientat
 		matrice[x][y] = z;
 
 	}
 
 	Dijkstra(nod_inceput);
-	
+	for (int i = 1; i <= nr_noduri; i++) {
+		afiseaza_drumuri(i);
+	}
 
 	return 0;
 }
