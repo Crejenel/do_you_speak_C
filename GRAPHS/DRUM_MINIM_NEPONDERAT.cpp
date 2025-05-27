@@ -15,7 +15,7 @@ int nr_noduri;
 int nr_muchii;
 int matrice[101][101];
 
-
+//Algoritmul lui Moore
 int DrumMinim(int start, int final) {
 
 	if (start <= 0 || final <= 0) {
