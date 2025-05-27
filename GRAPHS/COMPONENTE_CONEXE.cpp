@@ -17,7 +17,7 @@ void DFS(int nod,int culoare) {
 
 	for (int i = 1; i <= nr_noduri; i++) {
 
-		if (matrice[nod][i] == 1 && culori[i] == 0) {
+		if ((matrice[nod][i] == 1 || matrice[i][nod] == 1) && culori[i] == 0) {
 			culori[i] = culoare;
 			DFS(i, culoare);
 		}
@@ -35,7 +35,7 @@ void BFS(int nod, int culoare) {
 		coada.pop();
 
 		for (int i = 1; i <= nr_noduri; i++) {
-			if (matrice[nod][i] == 1 && culori[i] == 0) {
+			if ((matrice[nod][i] == 1 || matrice[i][nod] == 1) && culori[i] == 0){
 				culori[i] = culoare;
 				coada.push(i);
 			}
