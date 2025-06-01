@@ -25,7 +25,7 @@ void Hierholzer(int nod) {
             }
         }
 
-        gasesteCicluEulerian(nodUrmator);
+        Hierholzer(nodUrmator);
     }
     cicluEulerian.push_back(nod);
 }
